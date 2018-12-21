@@ -8,7 +8,7 @@
         WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
 
         var marker = WE.marker([51.5, -0.09]).addTo(earth);
-        marker.bindPopup(<img src="/MinervaSmall.png">"<br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
+        marker.bindPopup("<img src='/MinervaSmall.png'><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
                          
         var marker2 = WE.marker([30.058056, 31.228889]).addTo(earth);
         marker2.bindPopup("<a href='/'>Whelp, I wanna go back to the home page</a>", {maxWidth: 120, closeButton: false});
