@@ -4,8 +4,9 @@
     <script src="http://www.webglearth.com/v2/api.js"></script>
     <script>
       function initialize() {
+        var options = {sky: true, tilting: true, zooming: true, center: [0, 0], zoom: 3};
         var earth = new WE.map('earth_div', tilting = false);
-        WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg').addTo(earth);
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
         var marker = WE.marker([50.389960, 12.506516]).addTo(earth);
         marker.bindPopup("<img src='/IAYC.png'><br><a href='https://www.iayc.org/'>International Astronomical Youth Camp</a><br><span style='font-size:12px;color:#999'>The IAYC is an experience unlike any other; a place for unforgettable memories and lifelong friendships. Young and enthusiastic students come together from all corners of the world, aged between 16 and 24. The camp hosts around 65 participants for three weeks in a remote location, with access to some of the most spectacular skies you may have ever seen.</span>", {maxWidth: 300, closeButton: true}).openPopup();
                          
@@ -13,12 +14,15 @@
         marker2.bindPopup("<a href='/'>Whelp, I wanna go back to the home page</a>", {maxWidth: 120, closeButton: true});
         var markerCustom = WE.marker([50, -9], '/MinervaLogo.png', 150, 108).addTo(earth);
         earth.setView([50.389960, 12.506516], 6);
+        
+        earth.setView([50.389960, 12.506516], 3);
+        earth.panTo([150,-40]);
       }
       function setZoom(zoom) {
         earth.setZoom(zoom);
       }
-      function panTo(coords) {
-        earth.panTo(coords);
+      function funcPanTo(coords) {
+        earth.panTo([150, 40]);
       }
     </script>
     <style>
@@ -33,7 +37,8 @@
     <div id="coords"></div>
     <div id="buttons">
       <input type="button" value="Zoom to level 9" onclick="setZoom(9);"><br>
-      <input type="button" value="Fly to Iceland" onclick="panTo([65, -19]);"><br>
+      <input type="button" value="Fly to Iceland" onclick="funcPanTo([65, -19]);"><br>
+      <input id="clickMe" type="button" value="clickme" onclick="funcPanTo();" />
     </div>
   </body>
 </html>
