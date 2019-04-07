@@ -26,4 +26,3 @@ function initialize() {
   function funcPanTo(coords) {
     earth.panTo(coords);
   }
-</script>
