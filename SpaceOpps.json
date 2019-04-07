@@ -1,0 +1,10 @@
+{
+  "camp": [
+    {"name": "IAYC", "coord": [50, 51]},
+    {"name": "NASA", "coord": [10, -80]},
+    {"name": "Example", "coord": [90, -30]}],
+  "observatory": [
+    {"name": "Griffith Observatory", "coord": [42, 69]},
+    {"name": "Ole Rømer", "coord": [58, 74]}
+    ]
+}
