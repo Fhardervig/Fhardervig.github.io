@@ -1,4 +1,4 @@
-function initialize() {
+function initGlobe() {
     var earth;
     var options = {sky: true,tilting: false, zooming: true, zoom: 3};
     earth = WE.map('earth',tilting = false);
