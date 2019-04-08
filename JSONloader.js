@@ -10,5 +10,3 @@ function loadOpportunities(){
   }
   console.log(opportunities);
 }
-
-loadOpportunities()
