@@ -1,8 +1,7 @@
 {
   "camp": [
     {"name": "International Astronomy Youth Camp", "coord": [50.389960,12.506516], "logo":"/icons/IAYC.png", "link":"https://www.iayc.org/", "summary": "The IAYC is an experience unlike any other; a place for unforgettable memories and lifelong friendships.Young and enthusiastic students come together from all corners of the world,aged between 16 and 24.The camp hosts around 65 participants for three weeks in a remote location,with access to some of the most spectacular skies you may have ever seen."},
-    {"name": "Space Camp", "coord": [34.710890, -86.652778], "logo":"/icons/SpaceCampUSA.png", "link":"https://www.spacecamp.com/","summary":"A one week camp in the US city that was the center of the American space race operations. Increase your knowledge about space and STEM topics through fun hands-on activities that will help you develop your leadership and teamwork skills. You will experience what astronauts experience during their training such as underwater tasks to simulate working on zero gravity and will command missions to the ISS, moon, or Mars."}
-    ]
+    {"name": "Space Camp", "coord": [34.710890, -86.652778], "logo":"/icons/SpaceCampUSA.png", "link":"https://www.spacecamp.com/","summary":"A one week camp in the US city that was the center of the American space race operations. Increase your knowledge about space and STEM topics through fun hands-on activities that will help you develop your leadership and teamwork skills. You will experience what astronauts experience during their training such as underwater tasks to simulate working on zero gravity and will command missions to the ISS, moon, or Mars."}],
   "observatory": [
     {"name": "Griffith Observatory", "coord": [42, 69]},
     {"name": "Ole Rømer", "coord": [58, 74], "logo": false},
