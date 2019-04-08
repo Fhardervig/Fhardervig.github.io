@@ -8,5 +8,4 @@ function loadOpportunities(){
     var opportunitiestext = request.response;
     var opportunities = JSON.parse(opportunitiestext);
   }
-  console.log(opportunities);
 }
