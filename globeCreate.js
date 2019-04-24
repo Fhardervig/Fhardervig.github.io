@@ -1,7 +1,5 @@
 function initGlobe() {
-    var earth;
     var options = {sky: true,tilting: false, zooming: true, zoom: 3};
-    earth = WE.map('earth',tilting = false);
     WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
     var marker = WE.marker([50.389960,12.506516], 'icons/camp-green50.png', 50, 50).addTo(earth);
     marker.bindPopup("<img src='/icons/IAYC.png'><br><a href='https://www.iayc.org/'>International Astronomical Youth Camp</a><br><span style='font-size:12px;color:#999'>The IAYC is an experience unlike any other; a place for unforgettable memories and lifelong friendships.Young and enthusiastic students come together from all corners of the world,aged between 16 and 24.The camp hosts around 65 participants for three weeks in a remote location,with access to some of the most spectacular skies you may have ever seen.</span>",{maxWidth: 300,closeButton: true});
