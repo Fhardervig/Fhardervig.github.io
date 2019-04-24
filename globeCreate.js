@@ -1,4 +1,5 @@
-function initGlobe(earth) {
+function initGlobe() {
+    var earth = WE.map('earth',tilting = false);
     var options = {sky: true,tilting: false, zooming: true, zoom: 3};
     WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
     var marker = WE.marker([50.389960,12.506516], 'icons/camp-green50.png', 50, 50).addTo(earth);
