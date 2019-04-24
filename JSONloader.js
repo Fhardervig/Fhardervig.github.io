@@ -9,6 +9,7 @@ function loadOpportunities(){
     console.log("Opportunities loaded")
     console.log(typeof opportunities)
     console.log(opportunities)
+    return opportunities;
   }
   request.send();
 }
