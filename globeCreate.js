@@ -15,7 +15,9 @@ function initGlobe() {
     marker4.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});                 
     
     var marker5 = WE.marker([50.0,50.0], '/icons/observatory-red.png', 50, 50).addTo(earth);
-    marker5.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});         
+    marker5.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});
+    
+    return earth;
 }
       
 function setZoom(earth, zoom) {
