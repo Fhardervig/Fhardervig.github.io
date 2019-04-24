@@ -7,6 +7,7 @@ function loadOpportunities(){
     var opportunitiestext = request.response;
     var opportunities = JSON.parse(opportunitiestext);
     console.log("Opportunities loaded")
+    console.log(typeof opportunities)
     console.log(opportunities)
   }
   request.send();
