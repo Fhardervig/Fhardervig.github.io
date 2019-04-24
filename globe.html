@@ -6,7 +6,8 @@
     <script src="JSONloader.js"></script>
     <script>
         function initialize() {
-            initGlobe();
+            var earth = WE.map('earth',tilting = false);
+            initGlobe(earth);
             loadOpportunities();
             console.log("Initialized");
         }
