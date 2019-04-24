@@ -19,9 +19,9 @@ function initGlobe() {
     marker5.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});         
 }
       
-function setZoom(zoom) {
+function setZoom(earth, zoom) {
     earth.setZoom(zoom);
 }
-function funcPanTo(coords) {
+function funcPanTo(earth, coords) {
     earth.panTo(coords);
 }
