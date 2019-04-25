@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script src="http://www.webglearth.com/v2/api.js"></script>
+  <script>
+    var earth;
+    var markerArray = [];
+    var filt = []
+    var data = [{
+      name: "International Astronomy Youth Camp",
+      category: "Camp",
+      coord: [50.389960, 12.506516],
+      logo: "https://www.iayc.org/images/iayc_logo_trans.png",
+      link: "https://www.iayc.org/",
+      summary: "The IAYC is an experience unlike any other; a place for unforgettable memories and lifelong friendships.Young and enthusiastic students come together from all corners of the world,aged between 16 and 24.The camp hosts around 65 participants for three weeks in a remote location,with access to some of the most spectacular skies you may have ever seen."
+    }, {
+      name: "Space Camp",
+      category: "Conference",
+      coord: [34.710890, -86.652778],
+      logo: "https://www.spacecamp.com/img/sc_logo_lrg.png",
+      link: "https://www.spacecamp.com/",
+      summary: "A one week camp in the US city that was the center of the American space race operations. Increase your knowledge about space and STEM topics through fun hands-on activities that will help you develop your leadership and teamwork skills. You will experience what astronauts experience during their training such as underwater tasks to simulate working on zero gravity and will command missions to the ISS, moon, or Mars."
+    }];
+
+    function initialize() {
+      var options = {
+        sky: true,
+        tilting: false,
+        zooming: true,
+        zoom: 3
+      };
+      earth = WE.map('earth', tilting = false);
+      WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+      setMarkers(data);
+    }
+
+    function setMarkers(opps) {
+      var i;
+      for (i = 0; i < opps.length; i++) {
+        var marker = WE.marker(opps[i]['coord']).addTo(earth);
+        marker.bindPopup("<img class='resize' src=" + opps[i]['logo'] + "><br><a href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
+          maxWidth: 300,
+          closeButton: true
+        });
+        markerArray.push(marker);
+      }
+    }
+
+    function setZoom(zoom) {
+      earth.setZoom(zoom);
+    }
+
+    function funcPanTo(coords) {
+      earth.panTo(coords);
+      setMarkers(data);
+    }
+
+    function unpin() {
+      for (var i = 0; i < markerArray.length; i++) {
+        markerArray[i].removeFrom(earth);
+      };
+    }
+
+    function filterCombineOr(obj, filterArray) {
+      for (let filter of filterArray) {
+        if (!filter[1](obj)) {
+          console.log("TRUUUUUUUUUUUE")
+          return true;
+        }
+      }
+      console.log("FAAAAAAAAAAALSE")
+      return false;
+    }
+
+    function filterFunc(check, group, identifier) {
+      console.log("Entered")
+      // Get the checkbox
+      var checkBox = document.getElementById(check);
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true) {
+        console.log("If 1")
+        //console.log(d => d.indexOf(group) === identifier)
+        if (group === "category"){
+          if (identifier === "Camp"){
+            filt.push([identifier, d => d.category === 'Camp'])
+          }
+          else if (identifier === "Conference"){
+            filt.push([identifier, d => d.category === 'Conference'])
+          }
+          
+        }
+        console.log(filt)
+      } else {
+        console.log("If 2")
+        for (var i = 0; i < filt.length; i++) {
+          if (filt[i][0] === identifier) filt.splice(i, 1);
+        }
+        console.log(filt)
+      }
+      var filtopps = data.filter(d => filterCombineOr(d, filt));
+      unpin();
+      if (filt.length == 0) {
+        setMarkers(data);
+      } else {
+        setMarkers(filtopps);
+      }
+    }
+  </script>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #earth {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #000;
+      position: absolute;
+    }
+
+    #coords {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 100000;
+    }
+
+    #buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    #layercontrol {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+  <title>Guiding Star: Your guide to the stars</title>
+</head>
+
+<body onload="initialize()">
+  <div id="earth"></div>
+  <div id="coords"></div>
+  <div id="buttons">
+    <input type="button" value="Zoom to level 9" onclick="setZoom(9);"><br>
+    <input type="button" value="Fly to Iceland" onclick="funcPanTo([65,-19]);"><br>
+    <input id="clickMe" type="button" value="clickme" onclick="unpin();" />
+  </div>
+  <div id="checkboxes">
+    Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"><br>
+    Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')">
+  </div>
+</body>
+
+</html>
