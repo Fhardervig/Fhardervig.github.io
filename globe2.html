@@ -65,7 +65,7 @@
 
     function filterCombineOr(obj, filterArray) {
       for (let filter of filterArray) {
-        if (!filter[1](obj)) {
+        if (filter[1](obj)) {
           console.log("TRUUUUUUUUUUUE")
           return true;
         }
