@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="imgRez.css">
   <script src="http://www.webglearth.com/v2/api.js"></script>
   <script>
     var earth;
@@ -11,6 +10,7 @@
     var data = [{
       name: "International Astronomy Youth Camp",
       category: "Camp",
+      target: ["high", "uni"],
       coord: [50.389960, 12.506516],
       logo: "https://www.iayc.org/images/iayc_logo_trans.png",
       link: "https://www.iayc.org/",
@@ -18,10 +18,27 @@
     }, {
       name: "Space Camp",
       category: "Conference",
+      target: ["high"],
       coord: [34.710890, -86.652778],
       logo: "https://www.spacecamp.com/img/sc_logo_lrg.png",
       link: "https://www.spacecamp.com/",
       summary: "A one week camp in the US city that was the center of the American space race operations. Increase your knowledge about space and STEM topics through fun hands-on activities that will help you develop your leadership and teamwork skills. You will experience what astronauts experience during their training such as underwater tasks to simulate working on zero gravity and will command missions to the ISS, moon, or Mars."
+    }, {
+      name: "Test1",
+      category: "Conference",
+      target: ["uni"],
+      coord: [30, 40],
+      logo: "http://www.visitfranklinsouthamptonva.com/media/95251/testing.jpg",
+      link: "https://www.google.com/",
+      summary: "This is the first test, conference, uni"
+    }, {
+      name: "Test2",
+      category: "Camp",
+      target: ["high"],
+      coord: [40, 30],
+      logo: "http://www.visitfranklinsouthamptonva.com/media/95251/testing.jpg",
+      link: "https://www.google.com/",
+      summary: "This is the second test, camp, high"
     }];
 
     function initialize() {
@@ -64,41 +81,70 @@
     }
 
     function filterCombineOr(obj, filterArray) {
+      var catFilt = []
+      var lvlFilt = []
       for (let filter of filterArray) {
-        if (filter[1](obj)) {
-          console.log("TRUUUUUUUUUUUE")
-          return true;
+        if (filter[0] === "category") {
+          catFilt.push(filter)
+        } else if (filter[0] === "target") {
+          lvlFilt.push(filter)
         }
       }
-      console.log("FAAAAAAAAAAALSE")
+      if (catFilt.length == 0) {
+        for (let lFilter of lvlFilt) {
+            if (lFilter[2](obj)) {
+              console.log("Show", obj["name"])
+              return true;
+            }
+          }
+      } else if (lvlFilt.length == 0) {
+        for (let cFilter of catFilt) {
+          if (cFilter[2](obj)) {
+            console.log("Show", obj["name"])
+            return true;
+          }
+        }
+      } else {
+        for (let lFilter of lvlFilt) {
+          for (let cFilter of catFilt) {
+              if (lFilter[2](obj) && cFilter[2](obj)) {
+              console.log("Show", obj["name"])
+              return true;
+            }
+          }
+        }
+      }
+      console.log("Hide", obj["name"])
       return false;
     }
 
     function filterFunc(check, group, identifier) {
-      console.log("Entered")
       // Get the checkbox
       var checkBox = document.getElementById(check);
       // If the checkbox is checked, display the output text
       if (checkBox.checked == true) {
-        console.log("If 1")
+        console.log("Checked", checkBox.id)
         //console.log(d => d.indexOf(group) === identifier)
-        if (group === "category"){
-          if (identifier === "Camp"){
-            filt.push([identifier, d => d.category === 'Camp'])
+        if (group === "category") {
+          if (identifier === "Camp") {
+            filt.push([group, identifier, d => d.category === 'Camp'])
+          } else if (identifier === "Conference") {
+            filt.push([group, identifier, d => d.category === 'Conference'])
           }
-          else if (identifier === "Conference"){
-            filt.push([identifier, d => d.category === 'Conference'])
+        } else if (group === "target") {
+          if (identifier === "high") {
+            filt.push([group, identifier, d => d.target.includes('high')])
+          } else if (identifier === "uni") {
+            filt.push([group, identifier, d => d.target.includes('uni')])
           }
-          
         }
-        console.log(filt)
       } else {
-        console.log("If 2")
+        console.log("Unchecked", checkBox.id)
         for (var i = 0; i < filt.length; i++) {
-          if (filt[i][0] === identifier) filt.splice(i, 1);
+          if (filt[i][1] === identifier) filt.splice(i, 1);
         }
-        console.log(filt)
       }
+      console.log(filt)
       var filtopps = data.filter(d => filterCombineOr(d, filt));
       unpin();
       if (filt.length == 0) {
@@ -148,8 +194,8 @@
 
 <body onload="initialize()">
   <div id="checkboxes">
-    Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"><br>
-    Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')">
+    Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"> Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')"> <br> High
+    School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'high')"> University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'uni')">
   </div>
   <div id="earth"></div>
   <div id="coords"></div>
