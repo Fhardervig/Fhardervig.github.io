@@ -57,6 +57,7 @@
       earth = WE.map('earth', tilting = false);
       WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
       setMarkers(data);
+      console.log('Init complete')
     }
 
     function setMarkers(opps) {
