@@ -66,6 +66,7 @@
           maxWidth: 300,
           closeButton: true
         });
+        marker.on(click, funcPanTo(opps[i]['coord']))
         markerArray.push(marker);
       }
     }
