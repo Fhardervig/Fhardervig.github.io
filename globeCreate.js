@@ -8,13 +8,13 @@ function initGlobe() {
     var marker2 = WE.marker([34.711438,-86.653934], 'icons/Competition.png', 50, 50).addTo(earth);
     marker2.bindPopup("<img src = '/icons/rover-cha140.jpg'><br><a href='https://www.nasa.gov/roverchallenge/registration/index.html'>NASA Human Exploration Rover Challenge</a><br><span style='font-size:12px;color:#999'>Design and build your human-powered rover! Pilot it at NASA at Huntsville through a course full of obstacles that simulate the harsh conditions of extraterrestrial surfaces, while completing mission tasks such as soil sample collection. Return to the mission base in less than seven minutes, so you don't die due to lack of oxygen! A lot of teamwork, strategical thinking, determination, and resilience are needed!</span>",{maxWidth: 300,closeButton:true});                                  
   
-    var marker3 = WE.marker([37.802767, -122.460420], '/icons/Stargazing.png', 50, 50).addTo(earth);
+    var marker3 = WE.marker([37.802767, -122.460420], 'icons/Stargazing.png', 50, 50).addTo(earth);
     marker3.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true}); 
     
-    var marker4 = WE.marker([-10.0,-40.0], '/icons/Conference.png', 50, 50).addTo(earth);
+    var marker4 = WE.marker([-10.0,-40.0], 'icons/Conference.png', 50, 50).addTo(earth);
     marker4.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});                 
     
-    var marker5 = WE.marker([50.0,50.0], '/icons/Observatory.png', 50, 50).addTo(earth);
+    var marker5 = WE.marker([50.0,50.0], 'icons/Observatory.png', 50, 50).addTo(earth);
     marker5.bindPopup("<a href='/'>This is a try</a>",{maxWidth: 120,closeButton: true});
     
     return earth;
