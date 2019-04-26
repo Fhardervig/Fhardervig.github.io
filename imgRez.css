@@ -2,3 +2,12 @@ img.resize {
   width:100px;
   height:100px;
 }
+.flexcontainer {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 320px) {
+  .flexcontainer {
+    display: block;
+  }
+}
