@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="imgRez.css">
   <script src="http://www.webglearth.com/v2/api.js"></script>
   <script>
     var earth;
@@ -11,7 +10,8 @@
     var data = [{
       name: "International Astronomy Youth Camp",
       category: "Camp",
-      target: ["high", "uni"],
+      language: "English",
+      target: ["High School", "University"],
       coord: [50.389960, 12.506516],
       logo: "https://www.iayc.org/images/iayc_logo_trans.png",
       link: "https://www.iayc.org/",
@@ -19,7 +19,8 @@
     }, {
       name: "Space Camp",
       category: "Conference",
-      target: ["high"],
+      language: "English",
+      target: ["High School"],
       coord: [34.710890, -86.652778],
       logo: "https://www.spacecamp.com/img/sc_logo_lrg.png",
       link: "https://www.spacecamp.com/",
@@ -27,7 +28,8 @@
     }, {
       name: "Test1",
       category: "Conference",
-      target: ["uni"],
+      language: "Czech",
+      target: ["University"],
       coord: [30, 40],
       logo: "http://www.visitfranklinsouthamptonva.com/media/95251/testing.jpg",
       link: "https://www.google.com/",
@@ -35,7 +37,8 @@
     }, {
       name: "Test2",
       category: "Camp",
-      target: ["high"],
+      language: "Bulgarian",
+      target: ["High School"],
       coord: [40, 30],
       logo: "http://www.visitfranklinsouthamptonva.com/media/95251/testing.jpg",
       link: "https://www.google.com/",
@@ -58,7 +61,7 @@
       var i;
       for (i = 0; i < opps.length; i++) {
         var marker = WE.marker(opps[i]['coord'], 'icons/' + opps[i]['category'] + '.png', 50, 50).addTo(earth);
-        marker.bindPopup("<img class='resize' src=" + opps[i]['logo'] + "><br><a href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
+        marker.bindPopup("<div class= 'flexcontainer'><img class='resize' src=" + opps[i]['logo'] + " align='top'><ul><li><a align='left' href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a></li><li>Age: "+opps[i]['target']+"</li><li>Language: "+opps[i]['language']+"</li></ul></div><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
           maxWidth: 300,
           closeButton: true
         });
@@ -133,10 +136,10 @@
             filt.push([group, identifier, d => d.category === 'Conference'])
           }
         } else if (group === "target") {
-          if (identifier === "high") {
-            filt.push([group, identifier, d => d.target.includes('high')])
+          if (identifier === "High School") {
+            filt.push([group, identifier, d => d.target.includes('High School')])
           } else if (identifier === "uni") {
-            filt.push([group, identifier, d => d.target.includes('uni')])
+            filt.push([group, identifier, d => d.target.includes('University')])
           }
         }
       } else {
@@ -196,10 +199,12 @@
 <body onload="initialize()">
   <div id="checkboxes">
     Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"> Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')"> <br> High
-    School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'high')"> University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'uni')">
+    School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'High School')"> University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'University')">
   </div>
   <div id="earth"></div>
   <div id="coords"></div>
+</div>
 </body>
 
-</html>
+</html><!DOCTYPE HTML>
+<html>
