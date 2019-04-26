@@ -61,7 +61,7 @@
     function setMarkers(opps) {
       var i;
       for (i = 0; i < opps.length; i++) {
-        var marker = WE.marker(opps[i]['coord'], 'icons/' + opps[i]['category'] + '.png', 50, 50).addTo(earth));
+        var marker = WE.marker(opps[i]['coord'], 'icons/' + opps[i]['category'] + '.png', 50, 50).addTo(earth);
         marker.bindPopup("<div class= 'flexcontainer'><img class='resize' src=" + opps[i]['logo'] + " align='top'><ul><li><a align='left' href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a></li><li>Age: "+opps[i]['target']+"</li><li>Language: "+opps[i]['language']+"</li></ul></div><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
           maxWidth: 300,
           closeButton: true
