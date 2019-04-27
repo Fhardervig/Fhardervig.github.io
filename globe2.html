@@ -127,6 +127,14 @@
             filt.push([group, identifier, d => d.category === 'Camp'])
           } else if (identifier === "Conference") {
             filt.push([group, identifier, d => d.category === 'Conference'])
+          } else if (identifier === "Observatory") {
+            filt.push([group, identifier, d => d.target.includes('Observatory')])
+          } else if (identifier === "Stargazing") {
+            filt.push([group, identifier, d => d.target.includes('Stargazing')])
+          } else if (identifier === "Internship") {
+            filt.push([group, identifier, d => d.target.includes('Internship')])
+          } else if (identifier === "Competition") {
+            filt.push([group, identifier, d => d.target.includes('Competition')])
           }
         } else if (group === "target") {
           if (identifier === "High School") {
@@ -191,8 +199,10 @@
 
 <body onload="initialize()">
   <div id="checkboxes">
-    Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"> Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')"> <br> High
-    School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'High School')"> University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'University')">
+    Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"> Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')"> 
+    Display competitions? <input type="checkbox" id="competitionCheck" onclick="filterFunc('competitionCheck', 'category', 'Competition')"> Display observatories? <input type="checkbox" id="obsCheck" onclick="filterFunc('obsCheck', 'category', 'Observatory')">
+    Display internships? <input type="checkbox" id="intCheck" onclick="filterFunc('intCheck', 'category', 'Internship')"> Display stargazing? <input type="checkbox" id="stargazeCheck" onclick="filterFunc('stargazeCheck', 'category', 'Stargazing')">
+    <br> High School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'High School')"> University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'University')">
   </div>
   <div id="earth"></div>
   <div id="coords"></div>
