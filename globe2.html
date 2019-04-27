@@ -128,13 +128,13 @@
           } else if (identifier === "Conference") {
             filt.push([group, identifier, d => d.category === 'Conference'])
           } else if (identifier === "Observatory") {
-            filt.push([group, identifier, d => d.target.includes('Observatory')])
+            filt.push([group, identifier, d => d.category === 'Observatory'])
           } else if (identifier === "Stargazing") {
-            filt.push([group, identifier, d => d.target.includes('Stargazing')])
+            filt.push([group, identifier, d => d.category === 'Stargazing'])
           } else if (identifier === "Internship") {
-            filt.push([group, identifier, d => d.target.includes('Internship')])
+            filt.push([group, identifier, d => d.category === 'Internship'])
           } else if (identifier === "Competition") {
-            filt.push([group, identifier, d => d.target.includes('Competition')])
+            filt.push([group, identifier, d => d.category === 'Competition'])
           }
         } else if (group === "target") {
           if (identifier === "High School") {
