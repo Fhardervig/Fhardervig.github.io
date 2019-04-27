@@ -96,7 +96,7 @@
           }
       } else if (lvlFilt.length == 0) {
         for (let cFilter of catFilt) {
-          if (cFilter[2](obj)) {
+          if (cFilter[2](obj) || obj.target.inclues('Anyone')) {
             console.log("Show", obj["name"])
             return true;
           }
@@ -104,7 +104,7 @@
       } else {
         for (let lFilter of lvlFilt) {
           for (let cFilter of catFilt) {
-              if (lFilter[2](obj) && cFilter[2](obj)) {
+              if (lFilter[2](obj) && (cFilter[2](obj) || obj.target.inclues('Anyone')) {
               console.log("Show", obj["name"])
               return true;
             }
