@@ -89,7 +89,7 @@
       }
       if (catFilt.length == 0) {
         for (let lFilter of lvlFilt) {
-            if (lFilter[2](obj) || obj.target.inclues('Anyone')) {
+            if (lFilter[2](obj) || obj.target.includes('Anyone')) {
               console.log("Show", obj["name"])
               return true;
             }
@@ -104,7 +104,7 @@
       } else {
         for (let lFilter of lvlFilt) {
           for (let cFilter of catFilt) {
-              if ((lFilter[2](obj) && cFilter[2](obj)) || (cFilter[2](obj) && obj.target.inclues('Anyone'))) {
+              if ((lFilter[2](obj) && cFilter[2](obj)) || (cFilter[2](obj) && obj.target.includes('Anyone'))) {
               console.log("Show", obj["name"])
               return true;
             }
