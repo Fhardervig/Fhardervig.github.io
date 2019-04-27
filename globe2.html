@@ -54,6 +54,15 @@
       logo: "https://www.iac2019.org/images/librariesprovider2/site-layout/logos/logo.png?sfvrsn=6dafc13a_4",
       link: "http://www.iafastro.org/events/iac/",
       summary: "The IAC is the one time of the year when all space actors come together. Global, multidisciplinary and covering all space sectors and topics, it offers everyone the latest space information, developments but above all contacts and potential partnerships. Each year, the IAC changes country, theme and local organiser, enabling all to learn more about, and be a part of the world space scene."
+    }, {
+      name: "Chabot Space & Science Center",
+      category: "Observatory",
+      language: "English",
+      target: ["Anyone"],
+      coord: [37.818668, -122.180511],
+      logo: "http://chabotspace.org/wp-content/uploads/2018/07/imageslogos.png",
+      link: "https://chabotspace.org/",
+      summary: "Explore the history of space exploration and learn more about what is needed for a space mission to be successful. Participate in hands-on STEM workshops and watch the stars on one of the observatory's telescopes during the night."
     }];
 
     function initialize() {
@@ -61,9 +70,10 @@
         sky: true,
         tilting: false,
         zooming: true,
-        zoom: 3
+        zoom: 3,
+        tilting: false
       };
-      earth = WE.map('earth', tilting = false);
+      earth = WE.map('earth', options);
       WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
       setMarkers(data);
       console.log('Init complete')
