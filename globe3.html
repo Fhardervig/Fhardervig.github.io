@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <!-- Set icon for the tab -->
+  <link rel="shortcut icon" href="icons/GS.ico">
+  <!-- Import css style which resizes pictures and aligns bullet points properly -->
+  <link rel="stylesheet" href="imgRez.css">
+  <!-- Import the WebGL Earth API -->
+  <script src="http://www.webglearth.com/v2/api.js"></script>
+  <script>
+    //Create variable to hold the globe object
+    var earth;
+    //Create list to store markers
+    var markerArray = [];
+    //Create list to store filters
+    var filt = []
+    //Create list of opportunities and assign their information to keys for easy retrieval
+    var data = [{
+      //Name of opportunity
+      name: "International Astronomy Youth Camp",
+      //Category of opportunity
+      category: "Camp",
+      //Primary language spoken at opportunity
+      language: "English",
+      //Target audience age/level of education
+      target: ["High School", "University"],
+      //Coordinates to university
+      coord: [50.389960, 12.506516],
+      //Link to icon to display on pop-up
+      logo: "https://www.iayc.org/images/iayc_logo_trans.png",
+      //Link to opportunity home website
+      link: "https://www.iayc.org/",
+      //Short summary of experience
+      summary: "The IAYC is an experience unlike any other; a place for unforgettable memories and lifelong friendships.Young and enthusiastic students come together from all corners of the world,aged between 16 and 24.The camp hosts around 65 participants for three weeks in a remote location,with access to some of the most spectacular skies you may have ever seen."
+    }, {
+      name: "Space Camp",
+      category: "Camp",
+      language: "English",
+      target: ["High School"],
+      coord: [34.710890, -86.652778],
+      logo: "https://www.spacecamp.com/img/sc_logo_lrg.png",
+      link: "https://www.spacecamp.com/",
+      summary: "A one week camp in the US city that was the center of the American space race operations. Increase your knowledge about space and STEM topics through fun hands-on activities that will help you develop your leadership and teamwork skills. You will experience what astronauts experience during their training such as underwater tasks to simulate working on zero gravity and will command missions to the ISS, moon, or Mars."
+    }, {
+      name: "Griffith Observatory",
+      category: "Observatory",
+      language: "English",
+      target: ["Anyone"],
+      coord: [34.118248, -118.300362],
+      logo: "https://ps.uci.edu/sites/default/files/multimedia.photos/v.jpg",
+      link: "http://www.griffithobservatory.org/",
+      summary: "Southern California’s gateway to the cosmos! Visitors can look through telescopes, explore exhibits, see live shows in the Samuel Oschin Planetarium, and enjoy spectacular views of Los Angeles and the Hollywood Sign."
+    }, {
+      name: "Space Vision",
+      category: "Conference",
+      language: "English",
+      target: ["University"],
+      coord: [33.417994, -111.928428],
+      logo: "https://d3lut3gzcpx87s.cloudfront.net/image_encoded/aHR0cHM6Ly9zaWxrc3RhcnQuczMuYW1hem9uYXdzLmNvbS81OTJkZDJhODg5M2FhYTVlZjM5NTUzYTMucG5n/250x250",
+      link: "https://spacevision.seds.org/2019",
+      summary: "Join hundreds of passionate young professionals for the annual national conference of Students for the Exploration and Development of Space (SEDS). The conference is organized and run entirely by students, and will run through November 7th through November 10th, 2019. SpaceVision 2019 will be held at Arizona State University's main campus in Tempe, AZ."
+    }, {
+      name: "The International Astronautical Congress",
+      category: "Conference",
+      language: "English",
+      target: ["Anyone"],
+      coord: [38.904856, -77.022971],
+      logo: "https://www.iac2019.org/images/librariesprovider2/site-layout/logos/logo.png?sfvrsn=6dafc13a_4",
+      link: "http://www.iafastro.org/events/iac/",
+      summary: "The IAC is the one time of the year when all space actors come together. Global, multidisciplinary and covering all space sectors and topics, it offers everyone the latest space information, developments but above all contacts and potential partnerships. Each year, the IAC changes country, theme and local organiser, enabling all to learn more about, and be a part of the world space scene."
+    }, {
+      name: "Chabot Space & Science Center",
+      category: "Observatory",
+      language: "English",
+      target: ["Anyone"],
+      coord: [37.818668, -122.180511],
+      logo: "https://media.glassdoor.com/sql/370200/chabot-space-and-science-center-squarelogo-1429701554173.png",
+      link: "https://chabotspace.org/",
+      summary: "Explore the history of space exploration and learn more about what is needed for a space mission to be successful. Participate in hands-on STEM workshops and watch the stars on one of the observatory's telescopes during the night."
+    }, {
+      name: "Kennedy Space Center Visitor Complex",
+      category: "Observatory",
+      language: "English",
+      target: ["Anyone"],
+      coord: [30.324586, -80.518201 ],
+      logo: "https://i.ytimg.com/vi/2o0yJkpdupA/maxresdefault.jpg",
+      link: "https://www.kennedyspacecenter.com/",
+      summary: "Look up! Kennedy Space Center is where rockets launch and space exploration starts happening on Earth! You will learn more about the story of space exploration, understand the next steps being taken to reach Moon and Mars, and to pilot your way back to Earth after a successful mission at the International Space Station. Oh, you will also have the chance to meet real astronauts and spaceships and to take pictures with giant rockets."
+    }, {
+      name: "NASA Human Exploration Rover Challenge",
+      category: "Competition",
+      language: "English",
+      target: ["High School", "University"],
+      coord: [34.711534, -86.653834],
+      logo: "data:image/jpeg;base64,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",
+      link: "https://www.nasa.gov/roverchallenge/registration/index.html",
+      summary: "Design and build your human-powered rover! Pilot it at NASA at Huntsville through a course full of obstacles that simulate the harsh conditions of extraterrestrial surfaces, while completing mission tasks such as soil sample collection. Return to the mission base in less than seven minutes, so you don't die due to lack of oxygen! A lot of teamwork, strategical thinking, determination, and resilience are needed!"
+    }, {
+      name: "Brazilian Olympiad of Astronomy - Olimpiada Brasileira de Astronomia",
+      category: "Competition",
+      language: "Portuguese",
+      target: ["High School"],
+      coord: [-14.360576, -47.738485],
+      logo: "http://www.oba.org.br/site/imagens/OBA_LOGO_2018a.png",
+      link: "http://www.oba.org.br/site/",
+      summary: "Are you Brazilian and wish to test your knowledge about astronomy and astronautics? This is the right opportunity for you, then! Ask your school to sign you up to the test and good luck! If you score high, you can even get a medal!"
+    }, {
+      name: "International Astronomy Summer Internship Program - Haus Der Astronomie, Max Planc Institute",
+      category: "Internship",
+      language: "English",
+      target: ["High School"],
+      coord: [49.396311, 8.724212],
+      logo: "http://www.eso.org/public/archives/logos/screen/hausastronomie-logo.jpg",
+      link: "http://www.haus-der-astronomie.de/en/what-we-do/internships/summer-internship",
+      summary: "Are you ready to engage in your own astronomical research project for three weeks? On this internship you will be able to engage on several astronomical observations and experiments while working with people from around the world. Be creative to come up with a research topic and work hard towards it!"
+    }, {
+      name: "The Leiden/ESA Astrophysics Program for Summer Students (LEAPS)",
+      category: "Internship",
+      language: "English",
+      target: ["University"],
+      coord: [52.157135, 4.485177],
+      logo: "http://leaps.strw.leidenuniv.nl/images/zegel-2x.jpg",
+      link: "http://leaps.strw.leidenuniv.nl/",
+      summary: "LEAPS is an opportunity for students with an interest in astronomy and astrophysics to perform a 10-12 week summer research project in collaboration with a research scientist from Leiden Observatory or ESA. The program is open to all students not currently engaged in a Ph.D. program, although most past participants have been senior-undergraduate or masters' students who are enthusiastic about research in astrophysics."
+    }, {
+      name: "San Francisco City Star Party: Pier 17 ",
+      category: "Stargazing",
+      language: "English",
+      target: ["Anyone"],
+      coord: [37.802348, -122.398137],
+      logo: "https://pbs.twimg.com/profile_images/1929398958/SFAA-Logo_400x400.png",
+      link: "https://www.sfaa-astronomy.org/event/san-francisco-city-star-party-pier-17/",
+      summary: "The San Francisco Amateur Astronomers invite you to their next City Star Party, where you can take a gander at our universe through telescopes, socialize with more experienced amateur astronomers, and get some tips about the night sky. The San Francisco Amateur Astronomers invite you to their next City Star Party, where you can take a gander at our universe through telescopes, socialize with more experienced amateur astronomers, and get some tips about the night sky. Come on May 12, 2019 at 7:30 pm – 10:30 pm at Pier 17,  adjacent to Exploratorium."
+    }, {
+      name: "Bangladesh Olympiad on Astronomy and Astrophysics",
+      category: "Competition",
+      language: "English",
+      target: ["High School"],
+      coord: [23.878330, 90.267388],
+      logo: "https://bdoaa.org/wp-content/uploads/2019/02/52598399_361160258054649_6917503889197498368_n.png",
+      link: "https://bdoaa.org/",
+      summary: "Are you fascinated by the stars of the sky or the mysteries of the universe? Register for the regional rounds of Bangladesh Olympiad on Astronomy and  Astrophysics at bdoaa.org. The competition is for the students from class 8-12. The winner of the national camp will be selected for the International Olympiad on Astronomy and Astrophysics."
+    }, {
+      name: "MOBFOG - Mostra Brasileira de Foguetes",
+      category: "Competition",
+      language: "Portuguese",
+      target: ["High School"],
+      coord: [-14.361576, -47.739485],
+      logo: "http://www.oba.org.br/site/imagens/OBA_LOGO_2018a.png",
+      link: "http://www.oba.org.br/site/?p=conteudo&pag=conteudo&idconteudo=586&idcat=29&subcat=",
+      summary: "Rockets, rockets, and more rockets! Brazilians, build your own plastic bottle rocket and fly it the highest and the farthest you can! Send the results to the organization on a report before the deadline and hope for awards! Why not be a rocket scientist for a day?"
+    }];
+
+    //Function to be called when page loads
+    function initialize() {
+      //Set options for globe
+      var options = {
+        //Display stars
+        sky: true,
+        //Allow tilting?
+        tilting: false,
+        //Allow zooming?
+        zooming: true,
+        //Initial zoom level
+        zoom: 3,
+      };
+      //Assign the WE.map object to the earth variable
+      earth = WE.map('earth', options);
+      //Load texture onto globe
+      WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+      //Call the setMarkers function for all opportunities
+      setMarkers(data);
+      //Print Init Complete
+      console.log('Init complete')
+    }
+
+    //Define function to display a list of markers on the globe
+    function setMarkers(opps) {
+      var i;
+      //For every opportunity you want to mark...
+      for (i = 0; i < opps.length; i++) {
+        //Create the marker at the opportunities coordinates and set the marker to match the opportunity type
+        var marker = WE.marker(opps[i]['coord'], 'icons/' + opps[i]['category'] + '.png', 50, 50).addTo(earth);
+        //Decide what to display within the pop-up. Retrieves most information from the opportunity's key-value pairs.
+        marker.bindPopup("<div class= 'flexcontainer'><img class='resize' src=" + opps[i]['logo'] + " align='top'><ul><li><a align='left' href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a></li><li>Age: "+opps[i]['target']+"</li><li>Language: "+opps[i]['language']+"</li><li>Type: "+opps[i]['category']+"</li></ul></div><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
+          maxWidth: 300,
+          closeButton: true
+        });
+        //Add the marker to a list of current markers that are display
+        markerArray.push(marker);
+      }
+    }
+
+    //UNUSED! Easy way to change the zoom level (could be bound to buttons and so on
+    function setZoom(zoom) {
+      earth.setZoom(zoom);
+    }
+
+    //UNUSED! Easy way to smoothly pan to a given set of coordinates. Was intended to pan to the marker the user clicks
+    //but the onClick event wasn't functioning as expected and needs rework.
+    function funcPanTo(coords) {
+      earth.panTo(coords);
+    }
+
+    //Remove all markers from the globe
+    function unpin() {
+      //For every displayed marker...
+      for (var i = 0; i < markerArray.length; i++) {
+        //... remove the marker
+        markerArray[i].removeFrom(earth);
+      };
+    }
+
+    //Check if an opportunity is able to satisfy the required filters to be displayed.
+    //Takes an opportunity and a list of filters to satisfy as an input.
+    //Called from filterFunc(), recommended to first familiarize you with that function
+    //If this function returns true, the opportunity is added to the display list, if false, it is not.
+    function filterCombineOr(obj, filterArray) {
+      //Create lists to store category filters and level of education filters
+      var catFilt = []
+      var lvlFilt = []
+      
+      //Populate the above lists by sorting the given list of filters into their respective list
+      for (let filter of filterArray) {
+        if (filter[0] === "category") {
+          catFilt.push(filter)
+        } else if (filter[0] === "target") {
+          lvlFilt.push(filter)
+        }
+      }
+      //These first two checks are purely 'OR' that checks if the opportunity satisfies at least one filter.
+      //E.g. if you want to display camps and conferences, the opportunity just needs to be either
+      
+      //If there are no category filters, only run through filters for level of education
+      if (catFilt.length == 0) {
+        //For all level of education filters...
+        for (let lFilter of lvlFilt) {
+          //If the opportunity satisfy the level filter, or the opportunity is for all levels...
+            if (lFilter[2](obj) || obj.target.includes('Anyone')) {
+              //Print that it succeeded and return true to add it to the list of opportunities to be displayed.
+              console.log("Show", obj["name"])
+              return true;
+            }
+          }
+        //Else if there are no level of education filters, only run through filters for category
+      } else if (lvlFilt.length == 0) {
+        //For all category filters...
+        for (let cFilter of catFilt) {
+          //If the opportunity satisfies the filter...
+          if (cFilter[2](obj)) {
+            //Print that it succeeded and return true to add it to the list of opportunities to be displayed.
+            console.log("Show", obj["name"])
+            return true;
+          }
+        }
+        //If no filter list is empty
+      } else {
+        //If searching through both filters, the opportunity has to satisfy at least one filter from both lists.
+        //E.g. searching for camps for high schoolers should have opportunities be both camps and for high schoolers or anyone.
+        //For every level of education filter...
+        for (let lFilter of lvlFilt) {
+          //and for every category filter...
+          for (let cFilter of catFilt) {
+            //if the opportunity either satisfies BOTH the target level of education and opportunity type OR
+            //it satisfies the opportunity type AND is appropriate for all audiences...
+              if ((lFilter[2](obj) && cFilter[2](obj)) || (cFilter[2](obj) && obj.target.includes('Anyone'))) {
+              //Print that it succeeded and return true to add it to the list of opportunities to be displayed.
+              console.log("Show", obj["name"])
+              return true;
+            }
+          }
+        }
+      }
+      //If the opportunity satisfied none of the above don't add it to the list of ooportunities to be displayed.
+      console.log("Hide", obj["name"])
+      return false;
+    }
+    
+    //This function is called when a button is checked or unchecked, and receives which checkbox was checked,
+    //what group the checkbox belongs to (level of education or category?), and what its value is (e.g. Camp or Conference).
+    function filterFunc(check, group, identifier) {
+      // Get the checkbox from the checkbox ID that was received
+      var checkBox = document.getElementById(check);
+      // If the checkbox is checked...
+      if (checkBox.checked == true) {
+        console.log("Checked", checkBox.id)
+        //if the checkbox controls the group "category"...
+        if (group === "category") {
+          //If the checkbox controls the category type 'Camp'...
+          if (identifier === "Camp") {
+            //Add the group of the filter [category], the type of the filter [camp], and the 'camp' filter to the list of filters.
+            //d is an opportunity. Basically d=> d.category === 'Camp', means, for d, if its category equals camp, then...
+            //This acts as the input for the later called .filter method native to JavaScript.
+            filt.push([group, identifier, d => d.category === 'Camp'])
+            //Repeat for all other categories
+          } else if (identifier === "Conference") {
+            filt.push([group, identifier, d => d.category === 'Conference'])
+          } else if (identifier === "Observatory") {
+            filt.push([group, identifier, d => d.category === 'Observatory'])
+          } else if (identifier === "Stargazing") {
+            filt.push([group, identifier, d => d.category === 'Stargazing'])
+          } else if (identifier === "Internship") {
+            filt.push([group, identifier, d => d.category === 'Internship'])
+          } else if (identifier === "Competition") {
+            filt.push([group, identifier, d => d.category === 'Competition'])
+          }
+          //If the checkbox controls the group "target" (...level of education) 
+        } else if (group === "target") {
+          //If the checkbox controsl the target "High School"
+          if (identifier === "High School") {
+            //Add the group of the filter [target], the type of the filter [High School], and the 'High School' filter to the list of filters.
+            //The d => d.target.includes('High School') checks if the list at the opportunities target key includes a string called 'High School'.
+            filt.push([group, identifier, d => d.target.includes('High School')])
+            //Repeat for other levels of education
+          } else if (identifier === "University") {
+            filt.push([group, identifier, d => d.target.includes('University')])
+          }
+        }
+        //If the checkbox became unchecked...
+      } else {
+        console.log("Unchecked", checkBox.id)
+        //If the list of filters contain the filter that the checkbox controls, remove it from the list.
+        for (var i = 0; i < filt.length; i++) {
+          if (filt[i][1] === identifier) filt.splice(i, 1);
+        }
+      }
+      //Print the list of current filters (can be seen in the browser console F12 in Chrome
+      console.log(filt)
+      //Create a list of filtered opportunities by calling the .filter method on the return from the filterCombineOr() function.
+      //Any opportunities that returns true will be added to the filtopps list, while false will be dropped.
+      var filtopps = data.filter(d => filterCombineOr(d, filt));
+      //Unpin all existing markers from the globe
+      unpin();
+      //If there are no filters...
+      if (filt.length == 0) {
+        //Display all opportunities
+        setMarkers(data);
+      } else {
+        //Else, only display those that passed the filters
+        setMarkers(filtopps);
+      }
+    }
+  </script>
+    <!-- Set the margins of objects on the page -->
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #earth {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #000;
+      position: absolute;
+    }
+
+    #coords {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 100000;
+    }
+
+    #buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    #layercontrol {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+    <!-- Set title of tab -->
+  <title>Guiding Star: Your guide to the stars</title>
+</head>
+  <!-- Set the initialize function to be called when HTML has structured the page -->
+<body onload="initialize()">
+    <!-- Create checkboxes and let them call the filterFunc() and send their ID, and the category and value which they control -->
+  <div id="checkboxes">
+    | Display camps? <input type="checkbox" id="campCheck" onclick="filterFunc('campCheck', 'category', 'Camp')"> | Display conferences? <input type="checkbox" id="conferenceCheck" onclick="filterFunc('conferenceCheck', 'category', 'Conference')"> 
+    | Display competitions? <input type="checkbox" id="competitionCheck" onclick="filterFunc('competitionCheck', 'category', 'Competition')"> | Display observatories? <input type="checkbox" id="obsCheck" onclick="filterFunc('obsCheck', 'category', 'Observatory')">
+    | Display internships? <input type="checkbox" id="intCheck" onclick="filterFunc('intCheck', 'category', 'Internship')"> | Display stargazing? <input type="checkbox" id="stargazeCheck" onclick="filterFunc('stargazeCheck', 'category', 'Stargazing')">
+    <br> | High School? <input type="checkbox" id="highCheck" onclick="filterFunc('highCheck', 'target', 'High School')"> | University? <input type="checkbox" id="uniCheck" onclick="filterFunc('uniCheck', 'target', 'University')">
+  </div>
+    <!-- Below the checkboxes create the globe -->
+  <div id="earth"></div>
+  <div id="coords"></div>
+</div>
+</body>
+
+</html><!DOCTYPE HTML>
+<html>
