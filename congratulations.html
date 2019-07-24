@@ -151,6 +151,22 @@
       link: "http://www.oba.org.br/site/?p=conteudo&pag=conteudo&idconteudo=586&idcat=29&subcat=",
       summary: "Rockets, rockets, and more rockets! Brazilians, build your own plastic bottle rocket and fly it the highest and the farthest you can! Send the results to the organization on a report before the deadline and hope for awards! Why not be a rocket scientist for a day?"
     }];
+    
+    function setMarkers(opps) {
+      var i;
+      //For every opportunity you want to mark...
+      for (i = 0; i < opps.length; i++) {
+        //Create the marker at the opportunities coordinates and set the marker to match the opportunity type
+        var marker = WE.marker(opps[i]['coord'], 'icons/' + opps[i]['category'] + '.png', 50, 50).addTo(earth);
+        //Decide what to display within the pop-up. Retrieves most information from the opportunity's key-value pairs.
+        marker.bindPopup("<div class= 'flexcontainer'><img class='resize' src=" + opps[i]['logo'] + " align='top'><ul><li><a align='left' href=" + opps[i]['link'] + ">" + opps[i]['name'] + "</a></li><li>Age: "+opps[i]['target']+"</li><li>Language: "+opps[i]['language']+"</li><li>Type: "+opps[i]['category']+"</li></ul></div><br><span style='font-size:12px;color:#999'>" + opps[i]['summary'] + "</span>", {
+          maxWidth: 300,
+          closeButton: true
+        });
+        //Add the marker to a list of current markers that are display
+        markerArray.push(marker);
+      }
+    }
     //Function to be called when page loads
     function initialize() {
       //Set options for globe
